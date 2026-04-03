@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 
+
 public class ProcGenWalker : MonoBehaviour
 {
     public enum Grid
@@ -26,9 +27,13 @@ public class ProcGenWalker : MonoBehaviour
     public float FillPercentage = 0.4f;
     public float WaitTime = 0.05f;
 
+    [SerializeField] GameObject loadingScreen;
+
     void Start()
     {
         InitializeGrid();
+        Camera.main.orthographicSize = 20f;
+        loadingScreen.SetActive(true);
     }
 
     void InitializeGrid()
@@ -44,10 +49,10 @@ public class ProcGenWalker : MonoBehaviour
         }
 
         Walkers = new List<ProcGenObject>();
-         
+
         Vector3Int TileCenter = new Vector3Int(gridHandler.GetLength(0) / 2, gridHandler.GetLength(1) / 2, 0);
 
-        ProcGenObject currWalker = new ProcGenObject(new Vector2(TileCenter.x, TileCenter.y), GetDirection(), 0.5f);
+        ProcGenObject currWalker = new ProcGenObject(new UnityEngine.Vector2(TileCenter.x, TileCenter.y), GetDirection(), 0.5f);
         gridHandler[TileCenter.x, TileCenter.y] = Grid.FLOOR;
         tileMap.SetTile(TileCenter, Floor);
         Walkers.Add(currWalker);
@@ -161,6 +166,10 @@ public class ProcGenWalker : MonoBehaviour
         }
     }
 
+
+
+
+
     IEnumerator CreateWalls()
     {
         for (int x = 0; x < gridHandler.GetLength(0) - 1; x++)
@@ -203,5 +212,20 @@ public class ProcGenWalker : MonoBehaviour
                 }
             }
         }
+        CenterCamera();
+        loadingScreen.SetActive(false);
+    }
+
+    // Looked up on documentation and StackOverFlow.
+    void CenterCamera()
+    {
+        Vector3Int centerTile = new Vector3Int(MapWidth / 2, MapHeight / 2, 0);
+        Vector3 worldCenter = tileMap.GetCellCenterWorld(centerTile);
+
+        Camera.main.transform.position = new Vector3(
+            worldCenter.x,
+            worldCenter.y,
+            Camera.main.transform.position.z
+        );
     }
 }
