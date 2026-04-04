@@ -151,8 +151,8 @@ MonoBehaviour:
   tileMap: {fileID: 1291626778}
   Floor: {fileID: 11400000, guid: 7955ccc46e16b4370bd767730063ab0b, type: 2}
   Wall: {fileID: 11400000, guid: eaef379b933cc486295d43ca212d61d2, type: 2}
-  MapWidth: 30
-  MapHeight: 30
+  MapWidth: 100
+  MapHeight: 34
   MaximumWalkers: 10
   TileCount: 0
   FillPercentage: 0.4
@@ -644,7 +644,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 150, y: 150, z: 1}
+  m_LocalScale: {x: 300, y: 300, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
