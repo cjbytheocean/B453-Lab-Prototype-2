@@ -11,10 +11,9 @@ public class KeyProcGen : MonoBehaviour
 
     public bool stopSpawning = false;
 
-
     void Update()
     {
-        if (gb.gameStarted && !stopSpawning)
+        if (!stopSpawning && pgw != null && pgw.gridHandler != null)
         {
             KeyGeneration();
             stopSpawning = true;
@@ -23,40 +22,28 @@ public class KeyProcGen : MonoBehaviour
 
     void KeyGeneration()
     {
-        spawnPositions.Clear();
-        
-        int t = 0;
+        List<Vector2Int> floorTiles = new List<Vector2Int>();
 
-        while (spawnPositions.Count < 1 && t < 5000)
+        for (int x = 0; x < pgw.MapWidth; x++)
         {
-            t++;
-            
-            float xPosition = Random.Range(minimum.x + wallMargin, maximum.x - wallMargin);
-            float yPosition = Random.Range(minimum.y + wallMargin, maximum.y - wallMargin);
-
-            Vector2 spawned = new Vector2(xPosition, yPosition);
-
-            if (WithinConstraints(spawned))
+            for (int y = 0; y < pgw.MapHeight; y++)
             {
-                spawnPositions.Add(spawned);
-            } 
-        }
-
-        for (int i = 0; i < spawnPositions.Count; i++)
-        {
-            Instantiate(circles[0], spawnPositions[0], Quaternion.identity); 
-        } 
-    }
-
-    bool WithinConstraints(Vector2 v)
-    {
-        foreach (Vector2 sp in spawnPositions)
-        {
-            if (Vector2.Distance(v, sp) < baseMargin)
-            {
-                return false;
+                if (pgw.gridHandler[x, y] == ProcGenWalker.Grid.FLOOR)
+                {
+                    floorTiles.Add(new Vector2Int(x, y));
+                } 
             }
         }
-        return true; 
+
+        Vector2Int chosen = floorTiles[Random.Range(0, floorTiles.Count)];
+        Vector3 spawned = tileMap.GetCellCenterWorld(new Vector3Int(chosen.x, chosen.y, 0));
+        Instantiate(keyPrefab, spawned, Quaternion.identity);
     }
 }
+
+        
+            
+
+        
+       
+     
