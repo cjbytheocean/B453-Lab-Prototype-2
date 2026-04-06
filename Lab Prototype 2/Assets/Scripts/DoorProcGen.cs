@@ -11,7 +11,7 @@ public class DoorProcGen : MonoBehaviour
 
     public bool stopSpawning = false;
 
-    public static Vector2Int doorPosition;
+    public Vector2Int doorPosition;
 
     void Update()
     {

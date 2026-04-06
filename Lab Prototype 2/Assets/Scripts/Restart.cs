@@ -6,7 +6,7 @@ public class Restart : MonoBehaviour
     public PlayerController pc;
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R) && pc.allowRestart )
+        if (Input.GetKeyDown(KeyCode.R) && pc.allowRestart)
         {
             RestartGame();
         }

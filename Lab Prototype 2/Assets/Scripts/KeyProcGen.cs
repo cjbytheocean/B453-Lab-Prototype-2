@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
+using UnityEngine.UIElements;
+using UnityEditor.MemoryProfiler;
 
 public class KeyProcGen : MonoBehaviour
 {
@@ -11,16 +13,18 @@ public class KeyProcGen : MonoBehaviour
 
     public bool stopSpawning = false;
 
+    public DoorProcGen dpg;
+
     void Update()
     {
         if (!stopSpawning && pgw != null && pgw.gridHandler != null)
         {
-            KeyGeneration();
+            KeyGeneration(dpg.doorPosition);
             stopSpawning = true;
         }
     }
 
-    void KeyGeneration()
+    void KeyGeneration(Vector2Int doorPos)
     {
         List<Vector2Int> floorTiles = new List<Vector2Int>();
 
@@ -30,7 +34,12 @@ public class KeyProcGen : MonoBehaviour
             {
                 if (pgw.gridHandler[x, y] == ProcGenWalker.Grid.FLOOR)
                 {
-                    floorTiles.Add(new Vector2Int(x, y));
+                    Vector2Int pos = new Vector2Int(x, y);
+
+                    if (pos != doorPos)
+                    {
+                        floorTiles.Add(pos);
+                    }
                 } 
             }
         }
