@@ -29,11 +29,14 @@ public class ProcGenWalker : MonoBehaviour
 
     [SerializeField] GameObject loadingScreen;
 
+    public PlayerController pc;
+
     void Start()
     {
         InitializeGrid();
         Camera.main.orthographicSize = 20f;
         loadingScreen.SetActive(true);
+        pc.player.SetActive(false);
     }
 
     void InitializeGrid()
@@ -213,7 +216,10 @@ public class ProcGenWalker : MonoBehaviour
             }
         }
         CenterCamera();
+        Vector3 camPos = Camera.main.transform.position;
+        pc.player.transform.position = new Vector3(camPos.x, camPos.y, 0f);
         loadingScreen.SetActive(false);
+        pc.player.SetActive(true);
     }
 
     // Looked up on documentation and StackOverFlow.

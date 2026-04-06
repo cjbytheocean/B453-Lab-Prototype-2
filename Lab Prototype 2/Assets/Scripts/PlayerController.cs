@@ -13,37 +13,33 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
 
     public GameObject restartText;
+    public GameObject player;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        rb.gravityScale = 0f;
         restartText.SetActive(false);
     }
     void Update()
     {
         float horizontalMovement = Input.GetAxis("Horizontal");
         float verticalMovement = Input.GetAxis("Vertical");
-        rb.linearVelocity = new Vector2(horizontalMovement * speed, rb.linearVelocity.y);
-
-  
-        rb.gravityScale = 0f;
-        rb.linearVelocity = new Vector2(horizontalMovement * speed, verticalMovement * speed); 
-   
-        rb.gravityScale = 1f;
-        rb.linearVelocity = new Vector2(horizontalMovement * speed, rb.linearVelocity.y);
-       
+        rb.linearVelocity = new Vector2(horizontalMovement * speed, verticalMovement * speed);
     }
     void OnTriggerEnter2D(Collider2D c)
     {
-        if (c.gameObject == key)
+        if (c.CompareTag("Key"))
         {
             keyObtained = true;
-            Destroy(gameObject);
+            Debug.Log("collision detected");
+            Destroy(c.gameObject);
         }
 
-        if (c.gameObject == door && keyObtained)
+        if (c.CompareTag("Door") && keyObtained)
         {
             allowRestart = true;
+            Debug.Log("collision detected");
             restartText.SetActive(true);
         }
     }
