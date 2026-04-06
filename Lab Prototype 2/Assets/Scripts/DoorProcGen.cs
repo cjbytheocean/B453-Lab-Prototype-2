@@ -2,25 +2,27 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 
-public class KeyProcGen : MonoBehaviour
+public class DoorProcGen : MonoBehaviour
 {
 
-    public GameObject keyPrefab;
+    public GameObject doorPrefab;
     public ProcGenWalker pgw;
     public Tilemap tileMap;
 
     public bool stopSpawning = false;
 
+    public static Vector2Int doorPosition;
+
     void Update()
     {
         if (!stopSpawning && pgw != null && pgw.gridHandler != null)
         {
-            KeyGeneration();
+            DoorGeneration();
             stopSpawning = true;
         }
     }
 
-    void KeyGeneration()
+    void DoorGeneration()
     {
         List<Vector2Int> floorTiles = new List<Vector2Int>();
 
@@ -36,15 +38,11 @@ public class KeyProcGen : MonoBehaviour
         }
 
         Vector2Int chosen = floorTiles[Random.Range(0, floorTiles.Count)];
-
+        doorPosition = chosen;
         Vector3 spawned = tileMap.GetCellCenterWorld(new Vector3Int(chosen.x, chosen.y, 0));
-        Instantiate(keyPrefab, spawned, Quaternion.identity);
+        Instantiate(doorPrefab, spawned, Quaternion.identity);
     }
 }
 
         
-            
-
-        
        
-     
