@@ -225,7 +225,38 @@ public class ProcGenWalker : MonoBehaviour
     // Looked up on documentation and StackOverFlow.
     void CenterCamera()
     {
-        Vector3Int centerTile = new Vector3Int(MapWidth / 2, MapHeight / 2, 0);
+        int xMin = MapWidth;
+        int yMin = MapHeight;
+        int xMax = 0;
+        int yMax = 0;
+        
+        for (int x = 0; x < MapWidth; x++)
+        {
+            for (int y = 0; y < MapHeight; y++)
+            {
+                if (gridHandler[x, y] == Grid.FLOOR)
+                {
+                    if (x < xMin)
+                    {
+                        xMin = x;
+                    }
+                    if (y < yMin)
+                    {
+                        yMin = y;
+                    }
+                    if (x > xMax)
+                    {
+                        xMax = x;
+                    }
+                    if (y > yMax)
+                    {
+                        yMax = y;
+                    }
+                }
+            }
+        }
+        
+        Vector3Int centerTile = new Vector3Int((xMin + xMax) / 2, (yMin + yMax) / 2, 0);
         Vector3 worldCenter = tileMap.GetCellCenterWorld(centerTile);
 
         Camera.main.transform.position = new Vector3(
