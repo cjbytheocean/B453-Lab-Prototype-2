@@ -213,10 +213,7 @@ public class ProcGenWalker : MonoBehaviour
         }
         CenterCamera();
 
-        //Vector3 camPos = Camera.main.transform.position;
-        //pc.player.transform.position = new Vector3(camPos.x, camPos.y, 0f);
-
-        List<Vector2Int> floors = new List<Vector2Int>();
+        List<Vector2Int> floorTiles = new List<Vector2Int>();
 
         for (int x = 0; x < MapWidth; x++)
         {
@@ -224,12 +221,12 @@ public class ProcGenWalker : MonoBehaviour
             {
                 if (gridHandler[x, y] == Grid.FLOOR)
                 {
-                    floors.Add(new Vector2Int(x, y));
+                    floorTiles.Add(new Vector2Int(x, y));
                 }
             }
         }
 
-        Vector2Int spawned = floors[Random.Range(0, floors.Count)];
+        Vector2Int spawned = floorTiles[Random.Range(0, floorTiles.Count)];
         Vector3 worldPosition = tileMap.GetCellCenterWorld(new Vector3Int(spawned.x, spawned.y, 0));
         pc.player.transform.position = new Vector3(worldPosition.x, worldPosition.y, 0f);
         

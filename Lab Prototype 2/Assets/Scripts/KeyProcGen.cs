@@ -10,11 +10,8 @@ public class KeyProcGen : MonoBehaviour
     public GameObject keyPrefab;
     public ProcGenWalker pgw;
     public Tilemap tileMap;
-
     public bool stopSpawning = false;
-
     public DoorProcGen dpg;
-
     [SerializeField] float distanceApart = 10f;
 
     void Update()
