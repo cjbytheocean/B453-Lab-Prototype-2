@@ -3,7 +3,6 @@ using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
-
     public float speed = 5f;
     [SerializeField] GameObject key;
     [SerializeField] GameObject door;

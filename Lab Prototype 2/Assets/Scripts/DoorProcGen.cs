@@ -4,7 +4,6 @@ using UnityEngine.Tilemaps;
 
 public class DoorProcGen : MonoBehaviour
 {
-
     public GameObject doorPrefab;
     public ProcGenWalker pgw;
     public Tilemap tileMap;
@@ -12,15 +11,7 @@ public class DoorProcGen : MonoBehaviour
     public bool stopSpawning = false;
 
     public Vector2Int doorPosition;
-
-    void Update()
-    {
-        if (!stopSpawning && pgw != null && pgw.gridHandler != null)
-        {
-            DoorGeneration();
-            stopSpawning = true;
-        }
-    }
+    public KeyProcGen kpg;
 
     void DoorGeneration()
     {
@@ -41,8 +32,12 @@ public class DoorProcGen : MonoBehaviour
         doorPosition = chosen;
         Vector3 spawned = tileMap.GetCellCenterWorld(new Vector3Int(chosen.x, chosen.y, 0));
         Instantiate(doorPrefab, spawned, Quaternion.identity);
+        kpg.KeyGeneration(doorPosition);
     }
-}
 
-        
+    public void Generate()
+    {
+        DoorGeneration();
+    }
+}      
        
